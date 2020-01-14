@@ -4,9 +4,9 @@
   "description": "A weather forecast web application integrated with AccuWeather.",
   "main": "index.js",
   "scripts": {
-    "build-client": "parcel build ./public/index.html",
-    "build-client-watch": "parcel watch ./public/index.html",
-    "start": "node server build-client-watch"
+    "build-client-watch": "parcel watch ./client/index.html",
+    "start-server": "nodemon server -e html,js,css --ignore dist --ignore client --ignore .cache",
+    "start-dev": "npm run build-client-watch & npm run start-server"
   },
   "author": "Chris Kang",
   "license": "ISC",
@@ -14,5 +14,11 @@
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
   }
 }
