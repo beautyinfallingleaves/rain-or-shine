@@ -1,0 +1,11 @@
+{
+  "name": "rain-or-shine",
+  "version": "1.0.0",
+  "description": "A weather forecast web application integrated with AccuWeather.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "author": "Chris Kang",
+  "license": "ISC"
+}
