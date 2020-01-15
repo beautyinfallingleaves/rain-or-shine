@@ -8,16 +8,20 @@ export const App = () => {
 
   // Fetch an AccuWeather location by geocoordinates & set it on state.
   const fetchAWLocationByGeoposition = async (lat, lon) => {
-    const {data} = await axios.get(
-      `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${process.env.ACCUWEATHER_API_KEY}&q=${lat}%2C${lon}`
-    )
+    try {
+      const {data} = await axios.get(
+        `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${process.env.ACCUWEATHER_API_KEY}&q=${lat}%2C${lon}`
+      )
 
-    setAWLocation({
-      key: data.Key,
-      locale: data.LocalizedName,
-      state: data.AdministrativeArea.ID,
-      country: data.AdministrativeArea.CountryID
-    })
+      setAWLocation({
+        key: data.Key,
+        locale: data.LocalizedName,
+        state: data.AdministrativeArea.ID,
+        country: data.AdministrativeArea.CountryID
+      })
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   // On component mount, fetch user's geolocation to provide a default forecast.
@@ -34,8 +38,12 @@ export const App = () => {
 
   // Fetch a forecast from the backend for the provided location.
   const fetchForecast = async (locationKey) => {
-    const {data} = await axios.get(`/api/forecast/${locationKey}`)
-    setAWForecast(data)
+    try {
+      const {data} = await axios.get(`/api/forecast/${locationKey}`)
+      setAWForecast(data)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   // On update of AWLocation, fetch forecast from backend.
