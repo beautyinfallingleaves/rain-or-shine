@@ -16,11 +16,24 @@
     "@babel/preset-react": "^7.8.3"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.8.3",
+    "axios": "^0.19.1",
     "compression": "^1.7.4",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "morgan": "^1.9.1",
     "path": "^0.12.7",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  }
+    "react-dom": "^16.12.0",
+    "redux": "^4.0.5",
+    "regenerator-runtime": "^0.13.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beautyinfallingleaves/rain-or-shine.git"
+  },
+  "bugs": {
+    "url": "https://github.com/beautyinfallingleaves/rain-or-shine/issues"
+  },
+  "homepage": "https://github.com/beautyinfallingleaves/rain-or-shine#readme"
 }
