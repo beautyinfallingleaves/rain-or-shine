@@ -22,7 +22,7 @@ ACCUWEATHER_API_KEY = '<your AccuWeather API key>'
 npm run start-dev
 ```
 
-## Instructions
+## Usage
 
 Visit localhost:8080 in your browser.
 
