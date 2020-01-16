@@ -6,11 +6,7 @@ const Forecast = db.define('forecast', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  EffectiveDate: {
-    type: Sequelize.DATE,
-    allowNull: false,
-  },
-  forecastJSON: {
+  JSON: {
     type: Sequelize.JSON,
     allowNull: false,
   }
