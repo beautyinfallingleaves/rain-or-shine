@@ -13,7 +13,11 @@ npm install
 ```bash
 createdb rain-or-shine
 ```
-4. Start the project by running:
+4. Create a .env file in the project's root directory with the following line of code. Paste your AccuWeather API key into it where indicated:
+```bash
+ACCUWEATHER_API_KEY = '<your AccuWeather API key'
+```
+5. Start the project by running:
 ```bash
 npm run start-dev
 ```
