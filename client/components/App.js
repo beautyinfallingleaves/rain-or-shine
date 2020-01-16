@@ -153,9 +153,9 @@ export const App = () => {
         {AWForecast ? (
           <Box className={classes.forecast}>
             <Typography variant="h5">
-              Forecast for {AWLocation.locale}, {AWLocation.state}
+              - Forecast for {AWLocation.locale}, {AWLocation.state} -
             </Typography>
-            <Typography variant="body1">{AWForecast.Headline.Text}</Typography>
+            <Typography variant="body1">{AWForecast.Headline.Text}.</Typography>
             <Grid container spacing={2} justify="center">
               {AWForecast.DailyForecasts.map(dailyForecast => (
                 <Grid item key={dailyForecast.Date}>
