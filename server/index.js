@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const PORT = process.env.PORT || 8080
 const app = express()
+const {db} = require('./db')
 require('dotenv').config()
 module.exports = app
 
@@ -55,10 +56,10 @@ const startListening = () => {
   )
 }
 
-// const syncDb = () => db.sync()
+const syncDb = () => db.sync()
 
 async function bootApp() {
-  // await syncDb()
+  await syncDb()
   await createApp()
   await startListening()
 }
