@@ -52,7 +52,7 @@ const createApp = () => {
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
-    console.log(`Forcasting the weather on port ${PORT}`)
+    console.log(`Forecasting the weather on port ${PORT}`)
   )
 }
 
