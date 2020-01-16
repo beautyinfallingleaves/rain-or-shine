@@ -5,6 +5,7 @@ import 'regenerator-runtime/runtime'
 export const App = () => {
   const [AWLocation, setAWLocation] = useState(null)      // hook for location
   const [locationInput, setLocationInput] = useState('')  // hook for form input
+  const [autoCompleteResult, setAutoCompleteResult] = useState([])  // hook for AW auto complete results
 
   // Fetch an AccuWeather location by geocoordinates & set it on state.
   const fetchAWLocationByGeoposition = async (lat, lon) => {
@@ -56,8 +57,15 @@ export const App = () => {
     if (AWLocation) fetchForecast(AWLocation.key)
   }, [AWLocation])
 
+  function handleChange(event) {
+    setAWLocation(null)
+    setLocationInput(event.target.value)
+    // lookup locations
+  }
+
+  // Fetch forecast when user submits.
   function handleSubmit(event) {
-    fetchForecast('')
+    fetchForecast(AWLocation.key)
     event.preventDefault()
   }
 
@@ -65,9 +73,18 @@ export const App = () => {
     <div>
       <h1>app</h1>
       <form onSubmit={handleSubmit}>
-
+        <label htmlFor="locationInput">
+          Get Forecast For
+        </label>
+        <input
+          id="locationInput"
+          type="text"
+          value={locationInput}
+          onChange={handleChange}
+          placeholder="Start typing a location."
+        />
+        <button type="submit" disabled={AWLocation ? false : true}>Get Forecast</button>
       </form>
-      <button type="submit">Get Forecast</button>
       {AWLocation &&
         <div>{AWLocation.key}: {AWLocation.locale}</div>
       }
