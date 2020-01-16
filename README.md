@@ -1,6 +1,6 @@
 # Rain or Shine
 
-Rain or Shine is a simple weather forecast page which retrieves data from AccuWeather.
+Rain or Shine is a simple weather app which retrieves a 5-day forecast from AccuWeather.
 
 ## Installation
 
@@ -9,10 +9,20 @@ Rain or Shine is a simple weather forecast page which retrieves data from AccuWe
 ```bash
 npm install
 ```
-3. Start the project by running:
+3. Create Postgres database instance (for instructions on download and setup, go [here](https://www.postgresql.org/)):
 ```bash
-npm run start
+createdb rain-or-shine
 ```
+4. Start the project by running:
+```bash
+npm run start-dev
+```
+
+## Instructions
+
+Rain or Shine will automatically look up your local forecast if you grant permission & your browser supports geolocation.
+
+Otherwise, type 3 or more characters into the location search field to search for locations, and select one to get your forecast.
 
 ## Author
 
