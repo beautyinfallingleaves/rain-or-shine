@@ -20,7 +20,9 @@ npm run start-dev
 
 ## Instructions
 
-Rain or Shine will automatically look up your local forecast if you grant permission & your browser supports geolocation.
+Visit localhost:8080 in your browser.
+
+Rain or Shine will initially look up your local forecast if you grant permission & your browser supports geolocation.
 
 Otherwise, type 3 or more characters into the location search field to search for locations, and select one to get your forecast.
 
