@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const axios = require('axios')
 module.exports = router;
 
 //temp forecast
@@ -185,7 +186,9 @@ const forecast = {
 
 router.get('/forecast/:location', async (req, res, next) => {
   try {
-    res.json(forecast);
+    const {data} = await axios.get(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${req.params.location}?apikey=${process.env.ACCUWEATHER_API_KEY}`)
+    console.log('awforecast: ', data.Headline.Text)
+    res.json(data);
   } catch (err) {
     next(err);
   }
