@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import {TextField} from '@material-ui/core'
+import {Autocomplete} from '@material-ui/lab'
 import 'regenerator-runtime/runtime'
 
 export const App = () => {
@@ -39,7 +41,7 @@ export const App = () => {
     })
   }, [])
 
-  // This state hook will manage forecasts returned from AccuWeather.
+  // This is a hook for storing forecast from AccuWeather.
   const [AWForecast, setAWForecast] = useState(null)
 
   // Fetch a forecast from the backend for the provided location.
@@ -57,10 +59,30 @@ export const App = () => {
     if (AWLocation) fetchForecast(AWLocation.key)
   }, [AWLocation])
 
-  function handleChange(event) {
+  // This is a hook for storing autocomplete locations from AccuWeather.
+  const [AWLocationsList, setAWLocationsList] = useState()
+
+  async function handleChange(event) {
+    const searchString = event.target.value
     setAWLocation(null)
-    setLocationInput(event.target.value)
-    // lookup locations
+    setAWForecast(null)
+    setLocationInput(searchString)
+
+    // Update Locations dropdown with AW Autocomplete Results.
+    if (searchString.length >= 3) {
+      try {
+        const {data} = await axios.get(
+          `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${process.env.ACCUWEATHER_API_KEY}&q=${searchString}`
+        )
+
+        // *****
+        // TODO - resolve returned list to AWLocationsList state hook
+        // *****
+        setAWLocationsList(data)
+      } catch (err) {
+        console.error(err)
+      }
+    }
   }
 
   // Fetch forecast when user submits.
@@ -71,25 +93,34 @@ export const App = () => {
 
   return (
     <div>
-      <h1>app</h1>
+      <h1>Rain or Shine 5-Day Weather Forecast</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="locationInput">
           Get Forecast For
         </label>
-        <input
+        <Autocomplete
           id="locationInput"
-          type="text"
-          value={locationInput}
-          onChange={handleChange}
-          placeholder="Start typing a location."
+          options={AWLocationsList}
+          getOptionLabel={option => `${option.LocalizedName}, ${option.AdministrativeArea.ID} ${option.Country.ID}`}
+          style={{width: 300}}
+          renderInput={params => (
+            <TextField
+              {...params}
+              label="Start Typing"
+              variant="outlined"
+              fullWidth
+              value={locationInput}
+              onChange={handleChange}
+            />
+          )}
         />
         <button type="submit" disabled={AWLocation ? false : true}>Get Forecast</button>
       </form>
-      {AWLocation &&
-        <div>{AWLocation.key}: {AWLocation.locale}</div>
-      }
       {AWForecast &&
-        <div>{AWForecast.Headline.Text}</div>
+        <React.Fragment>
+          <div>Forecast for {AWLocation.key}: {AWLocation.locale}</div>
+          <div>{AWForecast.Headline.Text}</div>
+        </React.Fragment>
       }
     </div>
   )
