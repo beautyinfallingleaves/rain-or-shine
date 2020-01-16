@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
-import {TextField} from '@material-ui/core'
+import {Typography, TextField} from '@material-ui/core'
 import {Autocomplete} from '@material-ui/lab'
+import {DailyForecast} from './'
 import 'regenerator-runtime/runtime'
 
 export const App = () => {
   const [AWLocation, setAWLocation] = useState(null)      // hook for location
   const [locationInput, setLocationInput] = useState('')  // hook for form input
-  const [autoCompleteResult, setAutoCompleteResult] = useState([])  // hook for AW auto complete results
 
   // Fetch an AccuWeather location by geocoordinates & set it on state.
   const fetchAWLocationByGeoposition = async (lat, lon) => {
@@ -60,7 +60,7 @@ export const App = () => {
   }, [AWLocation])
 
   // This is a hook for storing autocomplete locations from AccuWeather.
-  const [AWLocationsList, setAWLocationsList] = useState()
+  const [AWLocationOptions, setAWLocationOptions] = useState()
 
   async function handleChange(event) {
     const searchString = event.target.value
@@ -76,50 +76,47 @@ export const App = () => {
         )
 
         // *****
-        // TODO - resolve returned list to AWLocationsList state hook
+        // TODO - resolve returned list to AWLocationOptions state hook
         // *****
-        setAWLocationsList(data)
+        setAWLocationOptions(data)
       } catch (err) {
         console.error(err)
       }
     }
   }
 
-  // Fetch forecast when user submits.
-  function handleSubmit(event) {
-    fetchForecast(AWLocation.key)
-    event.preventDefault()
-  }
-
   return (
     <div>
-      <h1>Rain or Shine 5-Day Weather Forecast</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="locationInput">
-          Get Forecast For
-        </label>
-        <Autocomplete
-          id="locationInput"
-          options={AWLocationsList}
-          getOptionLabel={option => `${option.LocalizedName}, ${option.AdministrativeArea.ID} ${option.Country.ID}`}
-          style={{width: 300}}
-          renderInput={params => (
-            <TextField
-              {...params}
-              label="Start Typing"
-              variant="outlined"
-              fullWidth
-              value={locationInput}
-              onChange={handleChange}
-            />
-          )}
-        />
-        <button type="submit" disabled={AWLocation ? false : true}>Get Forecast</button>
-      </form>
+      <Typography variant="h4">Rain or Shine 5-Day Weather Forecast</Typography>
+      <Autocomplete
+        id="locationInput"
+        options={AWLocationOptions}
+        getOptionLabel={option => `${option.LocalizedName}, ${option.AdministrativeArea.ID} ${option.Country.ID}`}
+        onInputChange={handleChange}
+        onChange={(event, value) => setAWLocation({
+          key: value.Key,
+          locale: value.LocalizedName,
+          state: value.AdministrativeArea.ID,
+          country: value.CountryID
+        })}
+        style={{width: 300}}
+        renderInput={params => (
+          <TextField
+            {...params}
+            label="Start Typing a Location"
+            variant="outlined"
+            fullWidth
+            value={locationInput}
+          />
+        )}
+      />
       {AWForecast &&
         <React.Fragment>
-          <div>Forecast for {AWLocation.key}: {AWLocation.locale}</div>
+          <div>Forecast for {AWLocation.locale}, {AWLocation.state} {AWLocation.country}</div>
           <div>{AWForecast.Headline.Text}</div>
+          {AWForecast.DailyForecasts.map(dailyForecast => (
+            <DailyForecast key={dailyForecast.Date} forecast={dailyForecast} />
+          ))}
         </React.Fragment>
       }
     </div>
