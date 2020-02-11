@@ -17,11 +17,7 @@ createdb rain-or-shine
 ```bash
 ACCUWEATHER_API_KEY = '<your AccuWeather API key>'
 ```
-5. If you do not already have [Parcel](https://parceljs.org/getting_started.html) (a bundler) installed, you will need to do so:
-```bash
-npm install parcel-bundler
-```
-6. Start the project by running:
+5. Start the project by running:
 ```bash
 npm run start-dev
 ```
@@ -36,4 +32,4 @@ Otherwise, type 3 or more characters into the location search field to search fo
 
 ## Author
 
-[beautyinfallingleaves](https://github.com/beautyinfallingleaves)
+Chris Kang - [beautyinfallingleaves](https://github.com/beautyinfallingleaves)
